@@ -8,23 +8,25 @@ var server = http.createServer(app);
 var methodOverride = require('method-override');
 var mongoose = require('mongoose');
 var controllersUsuarios = require('./controllers/usuarios');
+var model = require('./models/usuario');
+var jsonParser = bodyParser.json();
 
 // BD y direcciones
 
 var router = express.Router();
-var usuario = express.Router();
+var usuarios = express.Router();
 var db = mongoose.connect('mongodb+srv://mongodb:mongo1234@test1-exw2w.mongodb.net/test?retryWrites=true&w=majority');
-usuario.route('/Usuarios').
+usuarios.route('/usuarios').
 get(controllersUsuarios.todosUsuarios).
 post(controllersUsuarios.addUsuarios);
-usuario.route('/Usuarios/:id').
+usuarios.route('/usuarios/:id').
 get(controllersUsuarios.porIdUsuarios).
 put(controllersUsuarios.updateUsuarios).
 delete(controllersUsuarios.deleteUsuarios);
 
 //app.use
 
-app.use('/api', Usuarios);
+app.use('/api', usuarios);
 app.use(bodyParser.urlencoded({
   extended: false
 }));

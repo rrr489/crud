@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-var Usuario = mongoose.model('Usuario');
+var model = require('../models/usuario.js');
+var Usuario = mongoose.model('usuario');
 
 //GETS
 
@@ -21,10 +22,10 @@ exports.porIdUsuarios = function (req, res) {
 
 //POST
 
-exports.addUsuarios = Function(req, res) {
+exports.addUsuarios = function (req, res) {
   console.log('POST');
   console.log(req.body);
-  var Usuario = new Usuario ({
+  var Usuario = new Usuario({
     nombre: req.body.nombre,
     apellido: req.body.apellido,
     tipo_ID: req.body.tipo_ID,
@@ -35,7 +36,7 @@ exports.addUsuarios = Function(req, res) {
     correo:  req.body.correo,
     salario_Mensual: req.body.salario_Mensual
   });
-  Usuario.save(function(err, Usuario){
+  Usuario.save(function (err, Usuario) {
     if (err) return res.status(500).send(err.message);
     res.status(200).jsonp(Usuario);
   });
@@ -43,8 +44,8 @@ exports.addUsuarios = Function(req, res) {
 
 //PUT
 
-exports.updateUsuarios =(req.res) {
-  Usuario.porIdUsuarios(req.params.id, Function(err, Usuario){
+exports.updateUsuarios = function (req, res) {
+  Usuario.porIdUsuarios(req.params.id, function (err, Usuario) {
     Usuario.nombre = req.body.petId;
     Usuario.apellido = req.body.apellido;
     Usuario.tipo_ID = req.body.tipo_ID;
@@ -52,7 +53,7 @@ exports.updateUsuarios =(req.res) {
     Usuario.contacto = req.body.contacto;
     Usuario.correo = req.body.correo;
     Usuario.salario_Mensual = req.body.salario_Mensual;
-    Usuario.save(Function(err){
+    Usuario.save(function (err) {
       if (err) return res.status(500).send(err.message);
       res.status(200).jsonp(Usuario);
     });
@@ -61,9 +62,9 @@ exports.updateUsuarios =(req.res) {
 
 //DELETE
 
-exports.deleteUsuarios = function(req, res) {
-  Usuarios.porIdUsuarios(req.params.id, function (err, Usuario){
-    Usuario.remove(Function(err){
+exports.deleteUsuarios = function (req, res) {
+  Usuarios.porIdUsuarios(req.params.id, function (err, Usuario) {
+    Usuario.remove(function (err) {
       if (err) return res.status(500).send(err.message);
       res.status(200).send();
     })
